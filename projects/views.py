@@ -26,3 +26,11 @@ def create_project(request):
             return redirect('projects')
     context = {'project':form}
     return render(request, 'projects/form-project.html', context)
+
+def delete_project(request, pk):
+    project = Project.objects.get(id=pk)
+    if request.method == "POST":
+        project.delete()
+        return redirect('projects')
+    context = {'object':project}
+    return render(request, 'projects/delete-project.html', context)
