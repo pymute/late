@@ -1,31 +1,28 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-
-data = [
-    {
-        'id': '1',
-        'title': 'Ecommerce Website',
-        'description': 'Fully functional ecommerce website'
-    },
-    {
-        'id': '2',
-        'title': 'Portfolio Website',
-        'description': 'A personal website to write articles and display work'
-    },
-    {
-        'id': '3',
-        'title': 'Social Network',
-        'description': 'An open source project built by the community'
-    }
-]
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpRequest
+from .models import Project
+from .form import ProjectForm
 
 def projects(request):
-    return render(request, 'projects.html', {'data':data})
+    projects = Project.objects.all()
+    return render(request, 'projects/projects.html', {'projects':projects})
 
 def project(request, pk):
-    content = None
-    for project in data:
-        if project['id'] == str(pk):
-            content = project
-    return render(request, 'project.html', context=content)
+    
+    project = Project.objects.get(id=pk)
+    print(project)
+    # for project in data:
+    #     if project['id'] == str(pk):
+    #         content = project
+    context = {'project':project}
+    return render(request, 'projects/project.html', context)
 
+def create_project(request):
+    form = ProjectForm()
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('projects')
+    context = {'project':form}
+    return render(request, 'projects/form-project.html', context)
