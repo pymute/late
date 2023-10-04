@@ -10,6 +10,7 @@
         <th>Created</th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
     {% for project in projects %}
     <tr>
@@ -17,6 +18,8 @@
         <td>{{project.created}}</td>
         <td><a href="{% url 'project' project.id %}">View</a></td>
         <td><a href="{% url 'delete-project' project.id %}">Delete</a></td>
+        <td><a href="{% url 'update-project' project.id %}">Update</a></td>
+        
     </tr>
     {% endfor %}
 
