@@ -1,80 +1,63 @@
 {% extends 'main.html' %}
 
+{% load static%}
+
 {% block content %}
 
 
-<h1>This is Projects Template</h1>
-
-<main class="home">
-    <section class="hero-section text-center">
-      <div class="container container--narrow">
-        <div class="hero-section__box">
-          <h2>CONNECT WITH <span>DEVELOPERS</span></h2>
-          <h2>FROM AROUND THE WORLD</h2>
-        </div>
-
-        <div class="hero-section__search">
-          <form class="form" action="#" method="get">
-            <div class="form__field">
-              <label for="formInput#search">Search Developers </label>
-              <input class="input input--text" id="formInput#search" type="text" name="text"
-                placeholder="Search by developer name" />
-            </div>
-
-            <input class="btn btn--sub btn--lg" type="submit" value="Search" />
-          </form>
-        </div>
+<main class="projects">
+  <section class="hero-section text-center">
+    <div class="container container--narrow">
+      <div class="hero-section__box">
+        <h2>Search for <span>Projects</span></h2>
       </div>
-    </section>
-    <!-- Search Result: DevList -->
-    <section class="devlist">
-      <div class="container">
-        <div class="grid grid--three">
-            {% for project in projects %}
-          <div class="column card">
-            <div class="dev">
-              <a href="" class="card__body">
-                <div class="dev__profile">
-                  <img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/22437186" alt="image" />
-                  <div class="dev__meta">
-                    <h3>NAME</h3>
-                    <h5>{{project.title}}</h5>
-                  </div>
-                </div>
-                <p class="dev__info">
-                  {{project.description}}
-                </p>
-                <div class="dev__skills">
-                  <span class="tag tag--pill tag--main">
-                    <small>some tag</small>
-                  </span>
-                  </span>
-                  </span>
-                </div>
-              </a>
-            </div>
+
+      <div class="hero-section__search">
+        <form class="form" action="#" method="get">
+          <div class="form__field">
+            <label for="formInput#search">Search By Projects </label>
+            <input class="input input--text" id="formInput#search" type="text" name="text"
+              placeholder="Search by Project Title" />
           </div>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
 
-    <div class="pagination">
-      <ul class="container">
-        <li><a href="#" class="btn btn--disabled">&#10094; Prev</a></li>
-        <li><a href="#" class="btn btn--sub">01</a></li>
-        <li><a href="#" class="btn">02</a></li>
-        <li><a href="#" class="btn">03</a></li>
-        <li><a href="#" class="btn">04</a></li>
-        <li><a href="#" class="btn">05</a></li>
-        <li><a href="#" class="btn">06</a></li>
-        <li><a href="#" class="btn">07</a></li>
-        <li><a href="#" class="btn">08</a></li>
-        <li><a href="#" class="btn">09</a></li>
-        <li><a href="#" class="btn">10</a></li>
-        <li><a href="#" class="btn">Next &#10095;</a></li>
-      </ul>
+          <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+        </form>
+      </div>
     </div>
-  </main>
+  </section>
+  <!-- Search Result: DevList -->
+  <section class="projectsList">
+    <div class="container">
+      <div class="grid grid--three">
+        {%for project in projects%}
+        <div class="column">
+          <div class="card project">
+            <a href="{% url 'project' project.id %}" class="project">
+              <img class="project__thumbnail" src="{{project.project_image.url}}" alt="project thumbnail" />
+              <div class="card__body">
+                <h3 class="project__title">{{project.title}}</h3>
+                <p><a class="project__author" href="profile.html">By Dennis Ivanov</a></p>
+                <p class="project--rating">
+                  <span style="font-weight: bold;">{{project.vote_ratio}}%</span> Postitive
+                  Feedback ({{project.vote_count}} Votes)
+                </p>
+                
+                <div class="project__tags">
+                  {% for tag in project.tags.all %}
+                  <span class="tag tag--pill tag--main">
+                    <small>{{tag}}</small>
+                  </span>
+                  {% endfor %}
+                </div>
+                
+              </div>
+            </a>
+          </div>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </section>
+</main>
 
 {% endblock content %}
