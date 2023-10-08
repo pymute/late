@@ -5,7 +5,7 @@ class Project(models.Model):
     id  = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    project_image = models.ImageField(null=True, blank=True, default='testlogo.png')
+    project_image = models.ImageField(upload_to='projects/images/')
     demo_link = models.CharField(max_length=2000, null=True, blank=True)
     source_code = models.CharField(max_length=2000, null=True, blank=True)
     vote_ratio = models.IntegerField(default=0, null=True, blank=True)
